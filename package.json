@@ -2,7 +2,7 @@
   "name": "portfolio-v1",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://brenfreeze.github.io",
+  "homepage": "https://brenfreeze.github.io/portfolio-v1/",
   "dependencies": {
     "css-doodle": "^0.7.1",
     "gh-pages": "^2.0.1",
