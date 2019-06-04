@@ -1,18 +1,25 @@
 import React, { useState, } from 'react'
 import styled, { css, } from 'styled-components'
+import media from 'styled-media-query'
 import { useSpring, animated } from 'react-spring'
 
 const Container = styled.div`
+  --space: 2rem
+
   width: 100%;
   min-height: 100vh;
-  padding: 2rem;
+  padding: var(--space);
+
+  ${media.lessThan('small')`
+    --space: 1rem;
+  `}
 `
 
 const Hero = styled(animated.div)`
   position: relative;
   width: 100%;
-  height: calc(100vh - 4rem);
-  background: rgba(255, 255, 255, 0.5);
+  height: calc(100vh - calc(var(--space) * 2));
+  background: linear-gradient(to bottom left, rgba(255,255,255,0), rgba(255,255,255,0.75));
   border-radius: 20px;
   overflow: hidden;
 `
@@ -55,11 +62,15 @@ const HeroContentContainer = styled.div`
   width: 100%;
   bottom: 0;
   left: 0;
+
+  ${media.lessThan('medium')`
+    flex-direction: column;
+  `}
 `
 
 const HeroContent = styled.div`
-  max-width: 500px;
-  padding: 2rem;
+  max-width: 700px;
+  padding: var(--space);
 `
 
 const HeroName = styled.h1`
@@ -80,14 +91,21 @@ const SocialLinks = styled.div`
   display: flex;
   flex-flow: column;
   justify-content: flex-end;
-  padding: 2rem;
+  padding: var(--space);
   text-align: right;
+
+
+  ${media.lessThan('medium')`
+    justify-content: flex-start;
+    flex-flow: row;
+  `}
 `
 
 const LinkDescription = styled.span`
   font-size: 0.875rem;
   opacity: 0;
   transition: opacity 300ms ease;
+  margin-right: 0.5rem;
 `
 
 const LinkContainer = styled.a`
@@ -97,9 +115,23 @@ const LinkContainer = styled.a`
   color: rgba(0, 0, 0, 0.5);
   margin-bottom: 0.5rem;
 
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+
   &:last-child {
     margin: 0;
   }
+
+  ${media.lessThan('medium')`
+    justify-content: flex-start;
+    margin: 0;
+    margin-right: 1rem;
+
+    ${LinkDescription} {
+      display: none;
+    }
+  `}
 
   &:hover {
     ${LinkDescription} {
@@ -109,7 +141,11 @@ const LinkContainer = styled.a`
   }
 `
 
-const calc = (x, y) => `translate3d(${((0 - x) - window.innerWidth) / 10}px, ${((0 - y) - window.innerHeight) / 10}px, 0)`
+const Section = styled.div`
+  min-height: 100vh;
+`
+
+const calc = (x, y) => `translate3d(${((0 - x) - window.innerWidth) / 20}px, ${((0 - y) - window.innerHeight) / 20}px, 0)`
 
 function App() {
   const [ { xy, }, set ] = useSpring(() => ({ xy: [0, 0], config: { mass: 10, tension: 550, friction: 140 } }))
@@ -165,6 +201,8 @@ function App() {
           </SocialLinks>
         </HeroContentContainer>
       </Hero>
+      <Section>
+      </Section>
     </Container>
   )
 }
